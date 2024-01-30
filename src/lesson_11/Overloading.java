@@ -10,6 +10,9 @@ import java.util.Scanner;
 public class Overloading {
     public static void main(String[] args) {
 
+        System.out.println("Min untt value: " + Integer.MIN_VALUE);
+        System.out.println("Max int value: " + Integer.MAX_VALUE);
+
         printNumber(10);
 
         // Сигнатура метода
@@ -31,10 +34,12 @@ public class Overloading {
         fillArray(ints);
 
         printArray(ints);
-        
 
+        fillArray(ints, 10000);
 
-        // Написать перегруженный метод fillArray, которой заполняет массив числами в диапазоне от 0 до N (передаем в параметры метода)
+        printArray(ints);
+
+        // Написать перегруженный метод fillArray, которой заполняет массив случайными числами в диапазоне от 0 до N (передаем в параметры метода)
 
 
     } // Methods
@@ -55,10 +60,17 @@ public class Overloading {
         }
     }
 
+    public static void fillArray(int[] ints, int bound) {
+        Random random = new Random();
+        for (int i = 0; i < ints.length; i++) {
+            ints[i] = random.nextInt(bound + 1);
+        }
+    }
+
     public static void fillArray(int[] ints) {
         Random random = new Random();
         for (int i = 0; i < ints.length; i++) {
-            ints[i] = random.nextInt(1001);
+            ints[i] = random.nextInt(1001); // 0..1000
         }
     }
 
