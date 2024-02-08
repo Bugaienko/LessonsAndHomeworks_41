@@ -6,15 +6,25 @@ package lesson_17.ra;
 
 public class RubberArray {
 
-    int[] array;
-    int cursor; // присвоено значение по умолчанию 0
+    private int[] array;
+    private int cursor; // присвоено значение по умолчанию 0
+
 
     public RubberArray() {
         array = new int[10];
     }
 
+    // ++ Конструктор, принимающий в себя обычный массив и создающий RubberArray с такими де значениями
+    public RubberArray(int[] ints) {
+        array = new int[ints.length * 2];
+
+        for (int i = 0; i < ints.length; i++) {
+            add(ints[i]);
+        }
+    }
+
     // Добавлять в массив элемент
-    void add(int number) {
+    public void add(int number) {
         // Добавлять значение в наш массив
 
         // проверка. Есть ли место в нашем внутреннем массиве?
@@ -28,7 +38,7 @@ public class RubberArray {
     }
 
     //Добавлять в массив сразу несколько элементов
-    void add(int... ints) {
+    public void add(int... ints) {
         // ints - я могу с ним обращаться точно так же как с ссылкой на массив
 
         for (int i = 0; i < ints.length; i++) {
@@ -38,7 +48,7 @@ public class RubberArray {
 
 
     // Динамическое изменение размера массива
-    void expandArray() {
+    private void expandArray() {
         System.out.println("Расширяем массив! ================= " + cursor);
         // 1. создать новый массив бОльшего размера
         // 2. Переписать значения из старого массива в новый
@@ -80,21 +90,72 @@ public class RubberArray {
         }
     }
 
+    // Поиск элемента по значению (у нас есть значение, надо узнать есть ли такое значение в массиве
+    public int indexOf(int value) {
+        // так int, в качестве значение, а не индекса - проверять нам его не нужно
+        for (int i = 0; i < cursor; i++) {
+            if (array[i] == value) return i;
+        }
+
+        return -1;
+    }
+
+    public void showCursor() {
+        System.out.println("array[cursor-1]= " + array[cursor-1]);
+        System.out.println("array[cursor]= " + array[cursor]);
+    }
+
+    //    Удаление элемента по индексу
+    public int remove(int index) {
+        // 1. Проверка
+        if (index < 0 && index >= cursor) {
+            // такого индекса в массиве нет
+            return Integer.MIN_VALUE;
+        }
+
+        int value = array[index];
+
+        for (int i = index; i < cursor - 1; i++) {
+            array[i] = array[i + 1];
+        }
+
+        cursor--;
+
+        return value;
+    }
+
+    public boolean removeByValue(int value){
+        // Понять есть ли такой элемент в массиве
+        // Если нет - вернуть false и закончить работу методы
+        // если есть - получить его индекс
+        // переиспользовать метод, удаляющий по индексу.
+
+        int index = indexOf(value);
+        // Ctrl + Alt + <- вернуть курсор на предыдущую позицию
+
+        if (index == -1) return false;
+
+        remove(index);
+        return true;
+
+    }
+
+
 }
 
 /*
 + 1. Динамическое изменение размера массива
 + 2. Добавлять в массив элемент
 3. Добавлять в массив сразу несколько элементов
-+ 4.  Вывод в консоль значений массива
++ 4. Вывод в консоль значений массива
 ++ Текущее количество элементов в массиве
-Возвращение значения по индексу
-Конструктор, принимающий в себя обычный массив и создающий RubberArray с такими де значениями
-Поиск элемента по значению
+++ Возвращение значения по индексу
+++ Конструктор, принимающий в себя обычный массив и создающий RubberArray с такими де значениями
+++ Поиск элемента по значению
+++ Удаление элемента по индексу
+++ Удаление элемента по значению
 Замена значения по индексу (есть индекс и новое значение)
 Замена значения по значению (есть старое и новое значение)
-Удаление элемента по индексу
-Удаление элемента по значению
 
  */
 
