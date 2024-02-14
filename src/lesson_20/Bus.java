@@ -4,10 +4,25 @@ package lesson_20;
 @author Sergey Bugaienko
 */
 
+/*
+HW
+Добавьте в класс Bus поле, хранящее общее количество перевезенных автобусом пассажиров (за все время).
+
+Геттер для этого поля.
+
+Нужен ли сеттер?
+
+Должны ли мы в каком-то из существующих методов изменять количество перевезенных автобусом пассажиров?
+
+Если да - реализуйте.
+ */
+
 public class Bus extends Vehicle {
 
     private int capacity;
-    private int countPassengers; // по умолчанию установлено в 0
+    private int countPassengers; // по умолчанию установлено в 0. Количество пассажиров в автобусе в настоящий момент
+
+    private int totalPassengerCounter; // общее кол-во пассажиров, перевезенных этим (конкретным экземпляром) автобусом
 
     public Bus(String model, int yearManufactured, int capacity) {
 
@@ -23,6 +38,7 @@ public class Bus extends Vehicle {
             //свободное место есть. Добавляем пассажира
             countPassengers++;
             System.out.println("Пассажир зашел в автобус " + this.getModel());
+            totalPassengerCounter++;
             return true;
         }
 
@@ -51,5 +67,9 @@ public class Bus extends Vehicle {
 
     public int getCountPassengers() {
         return countPassengers;
+    }
+
+    public int getTotalPassengerCounter() {
+        return totalPassengerCounter;
     }
 }
