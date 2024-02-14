@@ -32,6 +32,9 @@ public class AutoParkMain {
         bus.takePassenger(new Passenger("Test"));
 
         System.out.println(bus.createStringByPassengersList());
+        System.out.println("\n ================== \n");
+
+        System.out.println(bus.toString());
 
 
     }

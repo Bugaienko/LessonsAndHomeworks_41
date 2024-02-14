@@ -78,17 +78,32 @@ public class Autobus {
         return autopilot;
     }
 
+    /*
+    HW
+    Воспроизвести код, написанный на уроке.
+
+    Переписать метод public String toString()в классе Autobus, используя StringBuilder для формирования строки.
+    Добавить в строку информации об автобусе список пассажиров.
+     */
     public String toString() {
         //TODO переписать, используя StringBuilder
         //Добавить в эту строку - список пассажиров.
-        return "Autobus: {" + " driver: " + driver.getLicenseNumber() + "; autopilot: "
-                + autopilot.getSoftwareVersion() + " }";
+        StringBuilder sb = new StringBuilder("Autobus: { driver: ");
+        sb.append(driver.getLicenseNumber())
+                .append("; autopilot: ").append(autopilot.getSoftwareVersion()).append("; ");
+        sb.append("passengers: ").append(createStringByPassengersList());
+        sb.append(" }");
+
+        return sb.toString();
+
+//        return "Autobus: {" + " driver: " + driver.getLicenseNumber() + "; autopilot: "
+//                + autopilot.getSoftwareVersion() + " }";
     }
 
     public String createStringByPassengersList() {
         // Перебрать список пассажиров. "Приклеить" к строке пассажира (в едином виде. id + name)
         // Т.к. пассажир - ссылочный тип данных - приклеивать только не null ссылки
-        StringBuilder sb = new StringBuilder("{");
+        StringBuilder sb = new StringBuilder("[");
         for (int i = 0; i < passengers.length; i++) {
             if (passengers[i] != null) {
                 //добавляю инфо о пассажире
@@ -103,7 +118,7 @@ public class Autobus {
         if (sb.length() > 1) {
             sb.setLength(sb.length() - 2);
         }
-        sb.append("}");
+        sb.append("]");
         return sb.toString();
     }
 }

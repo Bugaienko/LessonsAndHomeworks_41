@@ -32,6 +32,8 @@ public class Bus extends Vehicle {
         this.capacity = capacity;
     }
 
+
+
     public boolean takePassenger() {
         // Проверить, есть ли место в автобусе
         if (countPassengers < capacity) {

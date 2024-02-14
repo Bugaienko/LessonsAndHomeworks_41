@@ -15,6 +15,7 @@ public class Vehicle {
         this.yearManufactured = yearManufactured;
     }
 
+
     public void go() {
         System.out.println("Vehicle " + model + " начинает движение");
     }
