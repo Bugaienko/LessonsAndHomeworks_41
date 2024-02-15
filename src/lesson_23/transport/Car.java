@@ -1,4 +1,4 @@
-package homework_22.transport;
+package lesson_23.transport;
 /*
 @date 15.02.2024
 @author Sergey Bugaienko

@@ -1,4 +1,4 @@
-package homework_22.transport;
+package lesson_23.transport;
 /*
 @date 15.02.2024
 @author Sergey Bugaienko
@@ -17,7 +17,8 @@ Vehicle (родительский класс), Car, Bicycle и Motorcycle (до�
 Используйте полиморфизм для вызова метода startEngine() для каждого транспортного средства.
  */
 
-public class Vehicle {
+// Класс, у которого есть хотя бы один абстрактный метод - обязан быть помечен как abstract
+abstract public class Vehicle {
 
     private final long id;
     private static long idCounter;
@@ -28,9 +29,9 @@ public class Vehicle {
         this.id = idCounter++;
     }
 
-    public void startEngine() {
-        // метод без базовой реализации
-    }
+
+    // абстрактный метод не имеет реализации. Предназначен для переопределения в классах-потомках
+    abstract public void startEngine();
 
     public long getId() {
         return id;
