@@ -16,6 +16,8 @@ public class GenericsBox <T> { // E, K, V
     }
 
     public void  setValue(T value) {
+//        T value = new T(); невозможно создать объект типа "дженерик"
+
         this.value = value;
     }
 
