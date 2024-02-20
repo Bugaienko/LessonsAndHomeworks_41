@@ -4,12 +4,14 @@ package util;
 @author Sergey Bugaienko
 */
 
-public class MyArrayList <T> implements MyList<T> {
+import java.lang.reflect.Array;
+import java.util.Arrays;
+
+public class MyArrayList<T> implements MyList<T> {
 
     private T[] array;
     private int cursor; // присвоено значение по умолчанию 0
     private static final int MULTIPLAYER = 2;
-
 
 
     @SuppressWarnings("unchecked") // подавляем предупреждение компилятора о непроверяемом приведении типа
@@ -19,21 +21,22 @@ public class MyArrayList <T> implements MyList<T> {
 
     // ++ Конструктор, принимающий в себя обычный массив и создающий RubberArray с такими де значениями
     @SuppressWarnings("unchecked")
-    public MyArrayList(int[] ints) {
-        array = (T[]) new Object[ints.length * MULTIPLAYER];
+    public MyArrayList(T[] values) { // проверить как поломается, если не изменить тип массива в параметрах конструктора
+        array = (T[]) new Object[values.length * MULTIPLAYER];
 
-        for (int i = 0; i < ints.length; i++) {
-            add(ints[i]);
+        for (int i = 0; i < values.length; i++) {
+            add(values[i]);
         }
     }
 
     // Добавлять в массив элемент
+
+
     @Override
     public void add(T value) {
         // Добавлять значение в наш массив
 
         // проверка. Есть ли место в нашем внутреннем массиве?
-
         if (cursor > array.length * 0.9) {
             expandArray(); // метод расширяющий наш массив
         }
@@ -42,11 +45,12 @@ public class MyArrayList <T> implements MyList<T> {
     }
 
     //Добавлять в массив сразу несколько элементов
-    public void add(int... ints) {
+    @Override
+    public void addAll(T... values) {
         // ints - я могу с ним обращаться точно так же как с ссылкой на массив
 
-        for (int i = 0; i < ints.length; i++) {
-            add(ints[i]);
+        for (int i = 0; i < values.length; i++) {
+            add(values[i]);
         }
     }
 
@@ -54,7 +58,7 @@ public class MyArrayList <T> implements MyList<T> {
     // Динамическое изменение размера массива
     @SuppressWarnings("unchecked")
     private void expandArray() {
-//        System.out.println("Расширяем массив! ================= " + cursor);
+        System.out.println("Расширяем массив! ================= " + cursor);
         // 1. создать новый массив бОльшего размера
         // 2. Переписать значения из старого массива в новый
         // 3. Перебросить ссылку
@@ -70,66 +74,130 @@ public class MyArrayList <T> implements MyList<T> {
     }
 
     //Вывод в консоль значений массива
+    @Override
     public String toString() {
         if (cursor == 0) return "[]";
 
-        String result = "[";
+        StringBuilder sb = new StringBuilder("[");
         for (int i = 0; i < cursor; i++) {
-            result += array[i] + ((i < cursor - 1) ? ", " : "]");
+            sb.append(array[i]).append((i < cursor - 1) ? ", " : "]");
         }
-        return result;
+        return sb.toString();
     }
 
     // Текущее количество элементов в массиве
+    @Override
     public int size() {
         return cursor;
     }
 
     //Возвращение значения по индексу
-    public int get(int index) {
+    @Override
+    public T get(int index) {
         if (index >= 0 && index < cursor) {
             return array[index];
         } else {
-            return Integer.MIN_VALUE; // хорошего решения на этой стадии нет
-            //TODO Поправить потом
+            return null;
         }
     }
 
+    @Override
+    public void set(int index, T value) {
+        // 1. Проверка индекса
+        if (index < 0 || index > cursor - 1) return;
+
+        array[index] = value;
+    }
+
     // Поиск элемента по значению (у нас есть значение, надо узнать есть ли такое значение в массиве
-    public int indexOf(int value) {
+    @Override
+    public int indexOf(T value) {
         // так int, в качестве значение, а не индекса - проверять нам его не нужно
         for (int i = 0; i < cursor; i++) {
-            if (array[i] == value) return i;
+            if (array[i].equals(value)) return i; // здесь будут сравниваться ссылки
         }
 
         return -1;
     }
 
-    public void showCursor() {
-        System.out.println("array[cursor-1]= " + array[cursor-1]);
-        System.out.println("array[cursor]= " + array[cursor]);
+    @Override
+    public int lastIndexOf(T value) {
+        for (int i = cursor - 1; i >= 0; i--) {
+            if (array[i].equals(value)) return i;
+        }
+
+        return -1;
+    }
+
+    @Override
+    public boolean contains(T value) {
+        return indexOf(value) >= 0; // если элемент есть - indexOf вернет какое-то положительное число
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public Object[] toArray() {
+        //Todo что-то пошло не так CCE
+        // 1. Создать массив нужной длинны и типа
+        // 2. Переписать значения в новый массив
+        // 3. Вернуть новый массив из метода
+
+        T[] result = (T[]) new Object[cursor]; // 1. Создаем массив длинной cursor(кол-во элементов во внутреннем массиве)
+        for (int i = 0; i < cursor; i++) {
+            result[i] = array[i];
+        }
+
+        System.out.println("========== instanceof: " + (result[0] instanceof Integer));
+//        System.arraycopy(array, 0, result, 0, cursor); // // - альтернативный вариант
+        return result; // Integer[]
+//         return Arrays.copyOf(array, cursor); // - альтернативный вариант
+
+//        return result;
+
+
+    }
+
+    public T[] toArray(Class<T> clazz) {
+
+
+        // Рефлексия
+        // 1. Создаем массив длинной cursor(кол-во элементов во внутреннем массиве)
+        @SuppressWarnings("unchecked")
+        T[] result = (T[]) Array.newInstance(clazz, cursor);
+        for (int i = 0; i < cursor; i++) {
+            result[i] = array[i];
+        }
+
+        System.out.println("========== instanceof: " + (result[0] instanceof Integer));
+        return result; // Integer[]
     }
 
     //    Удаление элемента по индексу
-    public int remove(int index) {
+    @Override
+    public T remove(int index) {
+        System.out.println("Remove by index");
+
         // 1. Проверка
         if (index < 0 && index >= cursor) {
             // такого индекса в массиве нет
-            return Integer.MIN_VALUE;
+            return null;
         }
 
-        int value = array[index];
+        T value = array[index];
 
+        // перезаписываем все значения, начиная с удаляемого индекса
+        // значениями из соседней ячейки (справа)
         for (int i = index; i < cursor - 1; i++) {
             array[i] = array[i + 1];
         }
 
         cursor--;
-
         return value;
     }
 
-    public boolean removeByValue(int value){
+    @Override
+    public boolean remove(T value) {
+        System.out.println("Remove by Value");
         // Понять есть ли такой элемент в массиве
         // Если нет - вернуть false и закончить работу методы
         // если есть - получить его индекс
@@ -143,6 +211,11 @@ public class MyArrayList <T> implements MyList<T> {
         remove(index);
         return true;
 
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return cursor == 0;
     }
 
 
