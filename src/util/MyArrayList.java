@@ -136,29 +136,34 @@ public class MyArrayList<T> implements MyList<T> {
 
     @SuppressWarnings("unchecked")
     @Override
-    public Object[] toArray() {
-        //Todo что-то пошло не так CCE
+    public T[] toArray() {
+
         // 1. Создать массив нужной длинны и типа
         // 2. Переписать значения в новый массив
         // 3. Вернуть новый массив из метода
 
-        T[] result = (T[]) new Object[cursor]; // 1. Создаем массив длинной cursor(кол-во элементов во внутреннем массиве)
+        if (cursor == 0) return (T[]) new Object[0];
+        Class<T> clazz = (Class<T>) array[0].getClass();
+
+
+        T[] res1 = (T[]) Array.newInstance(clazz, cursor);
         for (int i = 0; i < cursor; i++) {
-            result[i] = array[i];
+            res1[i] = array[i];
         }
 
-        System.out.println("========== instanceof: " + (result[0] instanceof Integer));
+        return res1;
+
+//        T[] result = (T[]) new Object[cursor]; // 1. Создаем массив длинной cursor(кол-во элементов во внутреннем массиве)
+//        for (int i = 0; i < cursor; i++) {
+//            result[i] = array[i];
+//        }
+//
 //        System.arraycopy(array, 0, result, 0, cursor); // // - альтернативный вариант
-        return result; // Integer[]
-//         return Arrays.copyOf(array, cursor); // - альтернативный вариант
-
-//        return result;
-
+//        return Arrays.copyOf(array, cursor); // - альтернативный вариант
 
     }
 
     public T[] toArray(Class<T> clazz) {
-
 
         // Рефлексия
         // 1. Создаем массив длинной cursor(кол-во элементов во внутреннем массиве)

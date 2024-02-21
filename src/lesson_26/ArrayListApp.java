@@ -73,7 +73,10 @@ public class ArrayListApp {
         System.out.println(numberList);
 
         Object[] strings = stringList.toArray();
-        System.out.println(strings);
+        System.out.println(Arrays.toString(strings));
+
+        String[] strings1 = stringList.toArray();
+        System.out.println(Arrays.toString(strings1));
 
 
         Integer[] arrayInt = integerList.toArray(Integer.class);
