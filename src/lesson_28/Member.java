@@ -1,14 +1,14 @@
-package lesson_27.persons;
+package lesson_28;
 /*
 @date 21.02.2024
 @author Sergey Bugaienko
 */
 
-public class Person {
+public class Member {
     private String email;
     private String password;
 
-    public Person(String email, String password) {
+    public Member(String email, String password) {
         setEmail(email);
         setPassword(password);
     }
