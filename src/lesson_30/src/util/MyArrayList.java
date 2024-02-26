@@ -1,11 +1,12 @@
-package util;
+package lesson_30.src.util;
 /*
 @date 06.02.2024
 @author Sergey Bugaienko
 */
 
+import util.MyList;
+
 import java.lang.reflect.Array;
-import java.util.Arrays;
 
 public class MyArrayList<T> implements MyList<T> {
 

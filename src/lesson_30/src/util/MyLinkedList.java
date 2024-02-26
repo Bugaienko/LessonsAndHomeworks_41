@@ -1,10 +1,11 @@
-package util;
+package lesson_30.src.util;
 /*
 @date 22.02.2024
 @author Sergey Bugaienko
 */
 
-import org.junit.platform.engine.support.hierarchical.Node;
+import util.MyList;
+import util.MyQueue;
 
 import java.lang.reflect.Array;
 
