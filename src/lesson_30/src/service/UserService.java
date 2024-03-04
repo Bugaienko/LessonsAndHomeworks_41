@@ -4,8 +4,9 @@ package lesson_30.src.service;
 @author Sergey Bugaienko
 */
 
-import model.User;
-import repository.UserRepository;
+
+import lesson_30.src.model.User;
+import lesson_30.src.repository.UserRepository;
 import util.MyList;
 
 public class UserService {

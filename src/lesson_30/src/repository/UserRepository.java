@@ -4,8 +4,9 @@ package lesson_30.src.repository;
 @author Sergey Bugaienko
 */
 
-import model.Role;
-import model.User;
+
+import lesson_30.src.model.Role;
+import lesson_30.src.model.User;
 import util.MyArrayList;
 import util.MyList;
 
