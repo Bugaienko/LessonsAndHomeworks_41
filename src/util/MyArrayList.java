@@ -142,7 +142,8 @@ public class MyArrayList<T> implements MyList<T> {
         // 2. Переписать значения в новый массив
         // 3. Вернуть новый массив из метода
 
-        if (cursor == 0) return (T[]) new Object[0];
+//        if (cursor == 0) return (T[]) new Object[0];
+        if (cursor == 0) return null;
         Class<T> clazz = (Class<T>) array[0].getClass();
 
 
