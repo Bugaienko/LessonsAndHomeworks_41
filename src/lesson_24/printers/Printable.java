@@ -31,7 +31,8 @@ public interface Printable {
         staticPrivateMethod();
     }
 
-    private static void staticPrivateMethod() {
+//    private
+    static void staticPrivateMethod() {
         System.out.println("I am staticPrivate");
     }
 
