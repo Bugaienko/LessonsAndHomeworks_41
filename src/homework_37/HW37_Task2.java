@@ -29,7 +29,7 @@ Task 2
  */
 public class HW37_Task2 {
 
-    private static final int CAPACITY = 50_000;
+    private static final int CAPACITY = 150_000;
     private static final int BOUND = 1_000;
     private static final Random RANDOM = new Random();
 
@@ -40,13 +40,25 @@ public class HW37_Task2 {
         List<Integer> listL = new LinkedList<>();
 
 
+        long timeLinked = 0;
+        long timeArray = 0;
         for (int i = 0; i < CAPACITY; i++) {
             int randomValue = RANDOM.nextInt(BOUND);
-            listA.add(randomValue);
-            listL.add(randomValue);
-        }
 
-        System.out.println(" =============== ArrayList ==================");
+            long start = System.currentTimeMillis();
+            listA.add(randomValue);
+            long end = System.currentTimeMillis();
+            timeArray += (end - start);
+
+            long start1 = System.currentTimeMillis();
+            listL.add(randomValue);
+            long end1 = System.currentTimeMillis();
+            timeArray += (end1 - start1);
+        }
+        System.out.println("Add Time Array: " + timeArray);
+        System.out.println("Add Time Linked: " + timeLinked);
+
+        System.out.println("\n =============== ArrayList ==================");
         long totalDuration = 0;
 
         long duration1 =  getAllValuesByIndex(listA);
@@ -64,7 +76,7 @@ public class HW37_Task2 {
 
 
         long duration4 =  deleteByValues(listA);
-        totalDuration += duration3;
+        totalDuration += duration4;
         System.out.println("deleteByValues(listA) -> " + duration4);
 
         System.out.println("Total time ArrayList: " + totalDuration);
@@ -88,7 +100,7 @@ public class HW37_Task2 {
 
 
         duration4 =  deleteByValues(listL);
-        totalDuration += duration3;
+        totalDuration += duration4;
         System.out.println("deleteByValues(listL) -> " + duration4);
 
         System.out.println("Total time LinkedList: " + totalDuration);
