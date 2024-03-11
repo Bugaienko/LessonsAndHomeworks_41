@@ -7,6 +7,9 @@ out/
 *.iml
 lib/
 
+w_HashTable_Swing/
+w_*/
+
 .idea
 
 
